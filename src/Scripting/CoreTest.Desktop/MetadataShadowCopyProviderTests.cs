@@ -69,7 +69,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting.UnitTests
             Assert.Throws<ArgumentException>(() => _provider.GetMetadata("c:foo.dll", MetadataImageKind.Assembly));
         }
 
-        [Fact]
+        [ClrOnlyFact(ClrOnlyReason.Unknown)]
         public void Copy()
         {
             var dir = Temp.CreateDirectory();
@@ -108,7 +108,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting.UnitTests
             Assert.Null(sc2);
         }
 
-        [Fact]
+        [ClrOnlyFact(ClrOnlyReason.Unknown)]
         public void SuppressCopy_ShadowCopyDirectory()
         {
             // shadow copies not copied:
@@ -123,7 +123,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting.UnitTests
             Assert.Null(sc2);
         }
 
-        [Fact]
+        [ClrOnlyFact(ClrOnlyReason.Unknown)]
         public void Modules()
         {
             // modules: { MultiModule.dll, mod2.netmodule, mod3.netmodule }
@@ -168,7 +168,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting.UnitTests
             }
         }
 
-        [Fact]
+        [ClrOnlyFact(ClrOnlyReason.Unknown)]
         public unsafe void DisposalOnFailure()
         {
             var f0 = Temp.CreateFile().WriteAllText("bogus").Path;
@@ -178,7 +178,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting.UnitTests
             Assert.Throws<FileNotFoundException>(() => _provider.GetMetadata(f1, MetadataImageKind.Assembly));
         }
 
-        [Fact]
+        [ClrOnlyFact(ClrOnlyReason.Unknown)]
         public void GetMetadata()
         {
             var dir = Temp.CreateDirectory();
@@ -203,7 +203,7 @@ namespace Microsoft.CodeAnalysis.Scripting.Hosting.UnitTests
             Assert.Equal(2, _provider.CacheSize);
         }
 
-        [Fact]
+        [ClrOnlyFact(ClrOnlyReason.Unknown)]
         public void XmlDocComments_SpecificCulture()
         {
             var elGR = CultureInfo.GetCultureInfo("el-GR");

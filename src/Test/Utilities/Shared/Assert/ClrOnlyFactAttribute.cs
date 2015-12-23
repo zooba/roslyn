@@ -32,6 +32,8 @@ namespace Roslyn.Test.Utilities
 
         // Can't sign. 
         Signing,
+
+        Fusion,
     }
 
     public sealed class ClrOnlyFactAttribute : FactAttribute
@@ -62,6 +64,8 @@ namespace Roslyn.Test.Utilities
                     return "Can't sign assemblies in this scenario";
                 case ClrOnlyReason.DocumentationComment:
                     return "Documentation comment compiler can't run this test on Mono";
+                case ClrOnlyReason.Fusion:
+                    return "Fusion not available on Mono";
                 default:
                     return "Test supported only on CLR";
             }
