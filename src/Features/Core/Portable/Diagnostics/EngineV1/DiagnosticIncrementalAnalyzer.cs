@@ -13,7 +13,6 @@ using Microsoft.CodeAnalysis.Internal.Log;
 using Microsoft.CodeAnalysis.LanguageServices;
 using Microsoft.CodeAnalysis.Shared.Extensions;
 using Microsoft.CodeAnalysis.Shared.Options;
-using Microsoft.CodeAnalysis.SolutionCrawler;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Versions;
 using Roslyn.Utilities;
@@ -199,7 +198,7 @@ namespace Microsoft.CodeAnalysis.Diagnostics.EngineV1
             return new CompilationWithAnalyzers(compilation, filteredAnalyzers, analysisOptions);
         }
 
-        public override async Task AnalyzeSyntaxAsync(Document document, InvocationReasons reasons, CancellationToken cancellationToken)
+        public override async Task AnalyzeSyntaxAsync(Document document, CancellationToken cancellationToken)
         {
             await AnalyzeSyntaxAsync(document, diagnosticIds: null, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -258,7 +257,7 @@ namespace Microsoft.CodeAnalysis.Diagnostics.EngineV1
             }
         }
 
-        public override async Task AnalyzeDocumentAsync(Document document, SyntaxNode bodyOpt, InvocationReasons reasons, CancellationToken cancellationToken)
+        public override async Task AnalyzeDocumentAsync(Document document, SyntaxNode bodyOpt, CancellationToken cancellationToken)
         {
             await AnalyzeDocumentAsync(document, bodyOpt, diagnosticIds: null, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -399,7 +398,7 @@ namespace Microsoft.CodeAnalysis.Diagnostics.EngineV1
             }
         }
 
-        public override async Task AnalyzeProjectAsync(Project project, bool semanticsChanged, InvocationReasons reasons, CancellationToken cancellationToken)
+        public override async Task AnalyzeProjectAsync(Project project, bool semanticsChanged, CancellationToken cancellationToken)
         {
             await AnalyzeProjectAsync(project, cancellationToken).ConfigureAwait(false);
         }
