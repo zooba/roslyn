@@ -12,11 +12,10 @@ def isPr = false;
 def jobName = Utilities.getFullJobName(projectName, "perf_run", isPr)
 def myJob = job(jobName) {
     description('perf run')
-    label('windows-roslyn')
     steps {
         batchFile("""cibuild.cmd /release /test64""")
         batchFile("""Binaries\\Release\\Roslyn.Test.Performance.Runner.exe --no-trace-upload""")
     }
 }
-
+Utilities.setMachineAffinity(myJob, 'Windows_NT', 'latest-or-auto-elevated')
 Utilities.addGithubPushTrigger(myJob)
