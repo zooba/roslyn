@@ -7,8 +7,10 @@ import jobs.generation.*;
 def projectName = GithubProject
 // The input branch name (e.g. master)
 def branchName = GithubBranchName
+def defaultBranch = "*/${branchName}"
 
 def isPr = false;
+
 def jobName = Utilities.getFullJobName(projectName, "perf_run", isPr)
 def myJob = job(jobName) {
     description('perf run')
@@ -17,5 +19,7 @@ def myJob = job(jobName) {
         batchFile("""Binaries\\Release\\Roslyn.Test.Performance.Runner.exe --no-trace-upload""")
     }
 }
+
+Utilities.standardJobSetup(myJob, projectName, isPr, defaultBranch)
 Utilities.setMachineAffinity(myJob, 'Windows_NT', 'latest-or-auto-elevated')
 Utilities.addGithubPushTrigger(myJob)
