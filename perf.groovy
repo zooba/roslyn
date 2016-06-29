@@ -15,10 +15,18 @@ def jobName = Utilities.getFullJobName(projectName, "perf_run", isPr)
 def myJob = job(jobName) {
     description('perf run')
     steps {
-        powerShell("HELLO FROM POWERSHELL")
-        // http://dotnetci.blob.core.windows.net/roslyn/cpc.zip
+        powerShell("""Invoke-WebRequest -Uri http://dotnetci.blob.core.windows.net/roslyn/cpc.zip -OutFile cpc.zip""")
+        powerShell("""Expand-Archive .\\cpc.zip -dest C:\\CPC""")
         batchFile("""cibuild.cmd /release /test64""")
         batchFile("""Binaries\\Release\\Roslyn.Test.Performance.Runner.exe --no-trace-upload""")
+    }
+
+    publishers {
+        postBuildScripts {
+            steps {
+                powerShell("""Remove-Item -Recurse C:\\CPC C:\\CPCTraces C:\\PerfLogs C:\\PerfTemp""")
+            }
+        }
     }
 }
 
